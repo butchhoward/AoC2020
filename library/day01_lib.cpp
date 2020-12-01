@@ -46,9 +46,38 @@ std::pair<int, int> find_pair_sums_to_2020(std::vector<int> expenses)
     return std::make_pair(0, 0);
 }
 
-int day01_solve( std::vector<int> expenses )
+std::tuple<int, int, int> find_triplet_sums_to_2020(std::vector<int> expenses)
+{
+    for (auto i = expenses.begin(); i != expenses.end(); i++ )
+    {
+        for (auto k = i; k != expenses.end(); k++ )
+        {
+            for (auto m = k; m != expenses.end(); m++ )
+            {
+                if (*i + *k + *m == 2020)
+                {
+                    return std::make_tuple(*i, *k, *m);
+                }
+            }
+        }
+    }
+
+    return std::make_tuple(0, 0, 0);
+
+}
+
+
+int day01_part1_solve( std::vector<int> expenses )
 {
     auto expense_pair = find_pair_sums_to_2020(expenses);
     int solution = expense_pair.first * expense_pair.second;
     return solution;
 }
+
+int day01_part2_solve( std::vector<int> expenses )
+{
+    auto expenses_found = find_triplet_sums_to_2020(expenses);
+    int solution = std::get<0>(expenses_found) * std::get<1>(expenses_found) * std::get<2>(expenses_found);
+    return solution;
+}
+
