@@ -34,7 +34,7 @@ LIBRARY_DEPS = $(LIBRARY_OBJECTS:.o=.d)
 TEST_DEPS = $(TEST_OBJECTS:.o=.d)
 
 # flags #
-COMPILE_FLAGS = -std=c++14 -Wall -Wextra -g
+COMPILE_FLAGS = -std=c++20 -Wall -Wextra -g
 INCLUDES = -I $(LIBRARY_SRC_PATH)/ -I include/ -I /usr/local/include
 
 # Space-separated pkg-config libraries used by this project
