@@ -19,6 +19,15 @@ bool day01_part1_test_sample_data()
     return  514579 == solution;
 }
 
+
+bool day01_test_data()
+{
+    auto expenses = day01_parse_data("./data/day01_data.txt");
+    return 805731 == day01_part1_solve( expenses ) &&
+           192684960 == day01_part1_solve( expenses );
+}
+
+
 bool day01_part2_test_sample_data()
 {
     std::vector<int> expenses = {

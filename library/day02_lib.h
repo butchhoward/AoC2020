@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+namespace day02lib {
 
 typedef struct PasswordItem 
 {
@@ -28,8 +29,13 @@ typedef struct PasswordItem
 
 typedef std::vector<PasswordItem> PasswordData;
 
-// std::ostream & operator<<(std::ostream &os, PasswordItem& password_item);
+std::ostream & operator <<(std::ostream &os, PasswordItem& pw);
 
-int day02_part1_solve(const PasswordData& password_data);
+
+PasswordData parse_data(const std::string& filename);
+
+int part1_solve(const PasswordData& password_data);
+
+}
 
 #endif

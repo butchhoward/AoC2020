@@ -2,6 +2,8 @@
 #include "day02_lib.h"
 #include "test_runner.h"
 
+using namespace day02lib;
+
 bool day02_test_sample_data()
 {
 
@@ -14,19 +16,26 @@ bool day02_test_sample_data()
     Line 2 is an invalid password
     */
 
-   PasswordData password_data = { 
+   day02lib::PasswordData password_data = { 
        PasswordItem(1,2,'a', "abcde"),
        PasswordItem(1,3,'b', "cdefg"),
        PasswordItem(2,9,'c', "ccccccccc")
    };
 
-    return 2 == day02_part1_solve( password_data );
+    return 2 == part1_solve( password_data );
+}
+
+bool day02_test_data()
+{
+    auto password_data = parse_data("./data/day02_data.txt");
+    return 582 == part1_solve( password_data );
 }
 
 bool day02_test()
 {
    test_runner::Tests tests = {
         {"day02_test_sample_data", day02_test_sample_data}
+        ,{"day02_test_data", day02_test_data}
         //,{"XXX", XXX_test}
     };
 
