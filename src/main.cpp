@@ -1,4 +1,5 @@
 #include "day01.h"
+#include "day02.h"
 
 
 #include <iostream>
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
 
     switch (day) {
     case 1: day01(datafile); break;
+    case 2: day02(datafile); break;
     default:
         std::cerr << "unknown day. did you forget to update the switch in main.cpp?" << std::endl;
     }
