@@ -1,0 +1,10 @@
+name: check-build
+on: [push]
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: make clean 
+      - run: make all
+      - run: ./solve_test
