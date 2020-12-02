@@ -6,5 +6,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: g++-10 --version
+      - run: pwd
       - run: make clean all
-      - run: ./solve_test
+      - name: run-tests
+        run: ./solve_test
+        shell: bash
