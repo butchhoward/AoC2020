@@ -11,7 +11,8 @@ int day01_part2_solve( std::vector<int> expenses );
 
 std::vector<int> day01_parse_data(const std::string& filename);
 
-std::pair<int, int> find_pair_sums_to_2020(std::vector<int> expenses);
-std::tuple<int, int, int> find_triplet_sums_to_2020(std::vector<int> expenses);
+std::vector<int> find_pair_sums_to_2020(std::vector<int> expenses);
+std::vector<int> find_triplet_sums_to_2020(std::vector<int> expenses);
+
 
 #endif

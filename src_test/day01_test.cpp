@@ -1,6 +1,8 @@
 #include "day01_test.h"
 #include "day01_lib.h"
 #include "test_runner.h"
+#include <algorithm>
+
 
 bool day01_part1_test_sample_data()
 {
@@ -45,7 +47,8 @@ bool day01_test_finds_2020_pair()
 
     auto expense_pair = find_pair_sums_to_2020(expenses);
 
-    return expense_pair.first == 1721 && expense_pair.second == 299;
+    return std::find(expense_pair.begin(), expense_pair.end(), 1721) != expense_pair.end() && 
+           std::find(expense_pair.begin(), expense_pair.end(), 299) != expense_pair.end();
 }
 
 bool day01_test_does_not_find_2020_pair()
@@ -60,7 +63,7 @@ bool day01_test_does_not_find_2020_pair()
 
     auto expense_pair = find_pair_sums_to_2020(expenses);
 
-    return expense_pair.first == 0 && expense_pair.second == 0;
+    return expense_pair.size() == 0;
 }
 
 bool day01_test_finds_2020_triplet()
@@ -77,9 +80,9 @@ bool day01_test_finds_2020_triplet()
     auto expense_found = find_triplet_sums_to_2020(expenses);
 
     // 979, 366, and 675
-    return std::get<0>(expense_found) == 979 && 
-           std::get<1>(expense_found) == 366 &&
-           std::get<2>(expense_found) == 675
+    return std::find(expense_found.begin(), expense_found.end(), 979) != expense_found.end() && 
+           std::find(expense_found.begin(), expense_found.end(), 366) != expense_found.end()  &&
+           std::find(expense_found.begin(), expense_found.end(), 675) != expense_found.end() 
            ;
 }
 
@@ -95,12 +98,8 @@ bool day01_test_does_not_find_2020_triplet()
 
     auto expense_found = find_triplet_sums_to_2020(expenses);
 
-    return std::get<0>(expense_found) == 0 && 
-           std::get<1>(expense_found) == 0 &&
-           std::get<2>(expense_found) == 0
-           ;
+    return expense_found.size() == 0;
 }
-
 
 bool day01_test()
 {

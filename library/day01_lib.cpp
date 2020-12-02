@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <numeric>
 
 
 std::vector<int> day01_parse_data(const std::string& filename)
@@ -29,55 +30,67 @@ std::vector<int> day01_parse_data(const std::string& filename)
     return expenses;
 }
 
-std::pair<int, int> find_pair_sums_to_2020(std::vector<int> expenses)
+std::vector<int> find_pair_sums_to_2020(std::vector<int> expenses)
 {
+    std::vector<int> result;
+
     for (auto i = expenses.begin(); i != expenses.end(); i++ )
     {
-        for (auto k = i; k != expenses.end(); k++ )
+        for (auto k = i+1; k != expenses.end(); k++ )
         {
             if (*i + *k == 2020)
             {
-                return std::make_pair(*i, *k);
+                result.push_back(*i);
+                result.push_back(*k);
+                return result;
             }
         }
 
     }
 
-    return std::make_pair(0, 0);
+    return result;
 }
 
-std::tuple<int, int, int> find_triplet_sums_to_2020(std::vector<int> expenses)
+std::vector<int> find_triplet_sums_to_2020(std::vector<int> expenses)
 {
+    std::vector<int> result;
+
     for (auto i = expenses.begin(); i != expenses.end(); i++ )
     {
-        for (auto k = i; k != expenses.end(); k++ )
+        for (auto k = i+1; k != expenses.end(); k++ )
         {
-            for (auto m = k; m != expenses.end(); m++ )
+            for (auto m = k+1; m != expenses.end(); m++ )
             {
-                if (*i + *k + *m == 2020)
+                if (*i + *k + *m == 2020) 
                 {
-                    return std::make_tuple(*i, *k, *m);
+                    result.push_back(*i);
+                    result.push_back(*k);
+                    result.push_back(*m);
+                    return result;
                 }
             }
         }
     }
 
-    return std::make_tuple(0, 0, 0);
+    return result;
 
 }
 
 
 int day01_part1_solve( std::vector<int> expenses )
 {
-    auto expense_pair = find_pair_sums_to_2020(expenses);
-    int solution = expense_pair.first * expense_pair.second;
+    auto expenses_found = find_pair_sums_to_2020(expenses);
+    int solution = std::reduce(expenses_found.begin(), expenses_found.end(), 1,
+                                [](int a, int b){ return a*b; });
     return solution;
 }
 
 int day01_part2_solve( std::vector<int> expenses )
 {
+
     auto expenses_found = find_triplet_sums_to_2020(expenses);
-    int solution = std::get<0>(expenses_found) * std::get<1>(expenses_found) * std::get<2>(expenses_found);
+    int solution = std::reduce(expenses_found.begin(), expenses_found.end(), 1, 
+                                [](int a, int b){ return a*b; });
     return solution;
 }
 
