@@ -1,4 +1,4 @@
-CXX ?= g++
+CXX ?= g++-10
 
 # path #
 SRC_PATH = src
