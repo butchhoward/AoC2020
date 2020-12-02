@@ -21,20 +21,21 @@ typedef struct PasswordItem
         password(pw)
     {
     }
-    int min_count;
-    int max_count;
+    std::string::size_type min_count;
+    std::string::size_type max_count;
     char letter;
     std::string password;
 } PasswordItem;
 
 typedef std::vector<PasswordItem> PasswordData;
 
-std::ostream & operator <<(std::ostream &os, PasswordItem& pw);
+std::ostream & operator <<(std::ostream &os, const PasswordItem& pw);
 
 
 PasswordData parse_data(const std::string& filename);
 
 int part1_solve(const PasswordData& password_data);
+int part2_solve(const PasswordData& password_data);
 
 }
 
