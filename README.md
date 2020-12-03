@@ -1,4 +1,5 @@
 # Advent of Code 2020
+![Build Status](https://github.com/butchhoward/AoC2020/workflows/check-build/badge.svg)
 
 Having a bit of fun with [Advent of Code](https://adventofcode.com/)
 
