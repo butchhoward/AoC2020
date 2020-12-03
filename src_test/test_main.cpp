@@ -14,5 +14,5 @@ int main()
         //MAKEMODULE LIST MARKER. DO NOT DELETE
     };
 
-    return test_runner::run_tests(tests) ? 0 : 1;
+    return test_runner::run_tests("Test Main", tests, test_runner::OutputStyle::SUMMARY) ? 0 : 1;
 }

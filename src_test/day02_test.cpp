@@ -68,5 +68,5 @@ bool day02_test()
         //,{"XXX", XXX_test}
     };
 
-    return test_runner::run_tests(tests);
+    return test_runner::run_tests("day02_test", tests);
 }

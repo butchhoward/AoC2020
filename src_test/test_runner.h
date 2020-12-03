@@ -19,6 +19,14 @@ typedef std::vector<Test> Tests;
 
 bool run_tests( const test_runner::Tests& tests);
 
+typedef enum {
+    ALL,
+    SUMMARY,
+    NONE
+} OutputStyle;
+
+bool run_tests( const std::string& prefix, const test_runner::Tests& tests, OutputStyle output_style=OutputStyle::ALL);
+
 }
 
 

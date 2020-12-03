@@ -84,7 +84,7 @@ bool ${MODULE}_test()
         //,{"XXXNextTest", XXX_test}
     };
 
-    return test_runner::run_tests(tests);
+    return test_runner::run_tests("${MODULE}_test", tests);
 }
 EOT
 
