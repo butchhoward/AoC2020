@@ -14,7 +14,7 @@ read -r -d '' LIB_HEADER <<-EOT
 
 namespace ${MODULE}lib {
 
-int ${MODULE}_lib_function();
+int lib_function();
 
 }
 #endif
@@ -23,7 +23,7 @@ EOT
 read -r -d '' LIB_CPP <<-EOT
 #include "${MODULE}_lib.h"
 
-int ${MODULE}lib::${MODULE}_lib_function()
+int ${MODULE}lib::lib_function()
 {
     return -1;
 }
@@ -45,6 +45,8 @@ EOT
 read -r -d '' SRC_CPP <<-EOT
 #include "${MODULE}.h"
 #include "${MODULE}_lib.h"
+
+using namespace ${MODULE}lib;
 
 int ${MODULE}(const std::string& filename)
 {
@@ -68,16 +70,18 @@ read -r -d '' TEST_CPP <<-EOT
 #include "${MODULE}_lib.h"
 #include "test_runner.h"
 
+using namespace ${MODULE}lib;
+
 bool ${MODULE}_test_XXX()
 {
-    return false;
+    return 0 == lib_function();
 }
 
 bool ${MODULE}_test()
 {
    test_runner::Tests tests = {
         {"XXX Test", ${MODULE}_test_XXX}
-        //,{"XXX", XXX_test}
+        //,{"XXXNextTest", XXX_test}
     };
 
     return test_runner::run_tests(tests);
