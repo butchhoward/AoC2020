@@ -101,3 +101,11 @@ LIST_ITEM=",{\"${MODULE}_test\", ${MODULE}_test}"
 # the goofiness with the $ and \\\n is to get a newline in the replacement text
 sed -E -i '' -e "s~${INCLUDE_MARKER}~${INCLUDE_ITEM}"$'\\\n'"&~g" ./src_test/test_main.cpp
 sed -E -i '' -e "s~${LIST_MARKER}~${LIST_ITEM}"$'\\\n'"        &~g"  ./src_test/test_main.cpp
+
+# case 999: day02(datafile); break;
+CASE_ITEM="case 999: ${MODULE}(datafile); break;"
+MAIN_INCLUDE_ITEM="\#include \"${MODULE}\.h\""
+
+
+sed -E -i '' -e "s~${INCLUDE_MARKER}~${MAIN_INCLUDE_ITEM}"$'\\\n'"&~g" ./src/main.cpp
+sed -E -i '' -e "s~${LIST_MARKER}~${CASE_ITEM}"$'\\\n'"    &~g"  ./src/main.cpp
