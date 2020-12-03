@@ -28,13 +28,30 @@ inline bool operator==(const Tree& lhs, const Tree& rhs)
     return lhs.x == rhs.x && 
            lhs.y == rhs.y;
 }
+inline bool operator!=(const Tree& lhs, const Tree& rhs)
+{
+    return !(lhs == rhs);
+}
     
 typedef std::vector<Tree> Trees;
 
-Trees parse_data_line( const std::string& tree_line, int y );
-Trees parse_data_stream(  std::istream& tree_stream );
+typedef struct TreeInfo 
+{
+    TreeInfo() :
+        max_x(0), max_y(0)
+    {
+    }
 
-int lib_function();
+    Trees trees;
+    std::size_t max_x;
+    std::size_t max_y;
+} TreeInfo;
+
+
+Trees parse_data_line( const std::string& tree_line, std::size_t y );
+TreeInfo parse_data_stream(  std::istream& tree_stream );
+
+int part1_solve(std::istream& tree_stream);
 
 }
 #endif
