@@ -1,5 +1,5 @@
 # Advent of Code 2020
-![Build Status](https://github.com/butchhoward/AoC2020/workflows/check-build/badge.svg)
+[![Build Status](https://github.com/butchhoward/AoC2020/workflows/check-build/badge.svg)](https://github.com/butchhoward/AoC2020/actions)
 
 Having a bit of fun with [Advent of Code](https://adventofcode.com/)
 
