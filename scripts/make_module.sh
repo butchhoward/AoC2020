@@ -84,12 +84,12 @@ bool ${MODULE}_test()
 }
 EOT
 
-echo "${LIB_HEADER}" > ./library/${MODULE}_lib.h
-echo "${LIB_CPP}" > ./library/${MODULE}_lib.cpp
-echo "${SRC_HEADER}" > ./src/${MODULE}.h
-echo "${SRC_CPP}" > ./src/${MODULE}.cpp
-echo "${TEST_HEADER}" > ./src_test/${MODULE}_test.h
-echo "${TEST_CPP}" > ./src_test/${MODULE}_test.cpp
+echo "${LIB_HEADER}" > "./library/${MODULE}_lib.h"
+echo "${LIB_CPP}" > "./library/${MODULE}_lib.cpp"
+echo "${SRC_HEADER}" > "./src/${MODULE}.h"
+echo "${SRC_CPP}" > "./src/${MODULE}.cpp"
+echo "${TEST_HEADER}" > "./src_test/${MODULE}_test.h"
+echo "${TEST_CPP}" > "./src_test/${MODULE}_test.cpp"
 
 
 INCLUDE_MARKER="//MAKEMODULE INCLUDE MARKER. DO NOT DELETE"
