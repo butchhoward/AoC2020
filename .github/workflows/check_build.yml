@@ -5,9 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: g++-10 --version
-      - run: pwd
       - run: make clean all
       - name: run-tests
-        run: ./solve_test
+        run: ./test_solve
         shell: bash
