@@ -10,5 +10,5 @@ jobs:
         run: ./test_solve
         shell: bash
       - name: solve puzzles
-        run: ./scripts/run_all_days.shell
+        run: ./scripts/run_all_days.sh
         shell: bash
