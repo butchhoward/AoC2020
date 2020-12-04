@@ -45,13 +45,14 @@ EOT
 read -r -d '' SRC_CPP <<-EOT
 #include "${MODULE}.h"
 #include "${MODULE}_lib.h"
+#include <iostream>
 
 using namespace ${MODULE}lib;
 
 int ${MODULE}(const std::string& filename)
 {
     (void)filename;
-
+    std::cout << "Put day04 solver here!" << std::endl;
     return -1;
 }
 EOT

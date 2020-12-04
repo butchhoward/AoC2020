@@ -25,6 +25,11 @@ bool test_runner::run_tests( const std::string& prefix, const test_runner::Tests
         auto end = std::chrono::steady_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 
+        if (! test_result )
+        {
+            ++failed_tests;
+        }
+
         if (output_style == OutputStyle::ALL)
         {
             if ( test_result )
@@ -33,7 +38,6 @@ bool test_runner::run_tests( const std::string& prefix, const test_runner::Tests
             }
             else 
             {
-                ++failed_tests;
                 std::cerr << "\tFAILED: "<< t.description << " ( " << elapsed.count() << " us )" << std::endl;
             }
         }
