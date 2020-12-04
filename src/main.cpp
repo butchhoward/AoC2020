@@ -7,6 +7,9 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <ctime>
+#include <chrono>
+
 
 int main(int argc, char *argv[])
 {
@@ -21,6 +24,8 @@ int main(int argc, char *argv[])
     stream >> day;
     std::string datafile(argv[2]);
 
+    auto start = std::chrono::steady_clock::now();
+
     switch (day) {
     case 1: day01(datafile); break;
     case 2: day02(datafile); break;
@@ -29,6 +34,10 @@ int main(int argc, char *argv[])
     default:
         std::cerr << "unknown day. did you forget to update the switch in main.cpp?" << std::endl;
     }
+
+    auto end = std::chrono::steady_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+    std::cout << "Time: " << elapsed.count() << " microseconds" <<  std::endl;
 
     return 0;
 }
