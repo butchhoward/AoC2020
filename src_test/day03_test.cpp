@@ -87,11 +87,10 @@ bool day03_test_data()
         std::cout << "Error opening input file" << std::endl;
         return false;
     }
+    auto p1 = part1_solve(datafile);
 
     std::ifstream datafile2("./data/day03_data.txt");
-
-    auto p1 = part1_solve(datafile);
-    auto p2 = part2_solve(datafile2);
+    auto p2 = part2_solve(datafile);
 
     return (193 == p1)
            && (1355323200 == p2)

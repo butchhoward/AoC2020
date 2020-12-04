@@ -61,6 +61,11 @@ TreeInfo day03lib::parse_data_stream(  std::istream& tree_stream )
 std::size_t count_trees_hit_on_slope(const TreeInfo& tree_info, std::size_t slope_x, std::size_t slope_y)
 {
     std::size_t count(0);
+    if (tree_info.trees.size() == 0)
+    {
+        return count;
+    }
+
     std::size_t x(0);
     std::size_t y(0);
 
