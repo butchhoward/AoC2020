@@ -9,3 +9,6 @@ jobs:
       - name: run-tests
         run: ./test_solve
         shell: bash
+      - name: solve puzzles
+        run: ./scripts/run_all_days.shell
+        shell: bash
