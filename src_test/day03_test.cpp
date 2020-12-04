@@ -43,9 +43,9 @@ bool day03_test_parse_data_line()
 
     auto trees = parse_data_line("..##.......", 0);
 
-    return trees.size() == 2 &&
-           std::ranges::find_if(trees, [](const Tree& tree){ return tree == Tree(2,0); } ) != trees.end() &&
-           std::ranges::find_if(trees, [](const Tree& tree){ return tree == Tree(3,0); } ) != trees.end() 
+    return trees.size() == 2
+           && std::ranges::find_if(trees, [](const Tree& tree){ return tree == Tree(2,0); } ) != trees.end()
+           && std::ranges::find_if(trees, [](const Tree& tree){ return tree == Tree(3,0); } ) != trees.end() 
            ;
 }
 
@@ -72,27 +72,40 @@ bool test_sample_data()
     return 7 == part1_solve(tree_stream);
 }
 
+bool test_sample_data_part2()
+{
+    std::istringstream tree_stream(sample_data);
+    return 336 == part2_solve(tree_stream);
+}
+
+
 bool day03_test_data()
 {
-
     std::ifstream datafile("./data/day03_data.txt");
     if(!datafile)
     {
         std::cout << "Error opening input file" << std::endl;
-        return -1;
+        return false;
     }
 
-    return 193 == part1_solve(datafile)
-            ;
+    std::ifstream datafile2("./data/day03_data.txt");
+
+    auto p1 = part1_solve(datafile);
+    auto p2 = part2_solve(datafile2);
+
+    return (193 == p1)
+           && (1355323200 == p2)
+    ;
 }
 
 bool day03_test()
 {
    test_runner::Tests tests = {
-        {"test_parse_data_line", day03_test_parse_data_line},
-        {"test_parse_data_stream", day03_test_parse_data_stream},
-        {"test_sample_data", test_sample_data},
-        {"test_data", day03_test_data}
+        {"test_parse_data_line", day03_test_parse_data_line}
+        ,{"test_parse_data_stream", day03_test_parse_data_stream}
+        ,{"test_sample_data", test_sample_data}
+        ,{"test_data", day03_test_data}
+        ,{"test_sample_data_part2", test_sample_data_part2}
         //,{"XXXNextTest", XXX_test}
     };
 

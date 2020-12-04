@@ -11,7 +11,7 @@ Trees day03lib::parse_data_line( const std::string& tree_line, std::size_t y)
     Trees trees;
 
     std::istringstream ss(tree_line);
-    for (auto x = 0;;x++)
+    for (std::size_t x = 0;;x++)
     {
         char c;
         ss >> c;
@@ -58,19 +58,16 @@ TreeInfo day03lib::parse_data_stream(  std::istream& tree_stream )
 }
 
 
-int day03lib::part1_solve(std::istream& tree_stream)
+std::size_t count_trees_hit_on_slope(const TreeInfo& tree_info, std::size_t slope_x, std::size_t slope_y)
 {
-
-    auto tree_info = parse_data_stream( tree_stream );
-
-    int count(0);
+    std::size_t count(0);
     std::size_t x(0);
     std::size_t y(0);
 
     for (; y <= tree_info.max_y;)
     {
-        x = (x + 3) % (tree_info.max_x+1);
-        y += 1;
+        x = (x + slope_x) % (tree_info.max_x+1);
+        y += slope_y;
 
         if ( std::ranges::find(tree_info.trees, Tree(x,y)) != tree_info.trees.end() )
         {
@@ -79,5 +76,26 @@ int day03lib::part1_solve(std::istream& tree_stream)
     }
 
     return count;
+}
+
+std::size_t day03lib::part1_solve(std::istream& tree_stream)
+{
+
+    auto tree_info = parse_data_stream( tree_stream );
+
+    return count_trees_hit_on_slope(tree_info, 3, 1);
+
+}
+
+std::size_t day03lib::part2_solve(std::istream& tree_stream)
+{
+    auto tree_info = parse_data_stream( tree_stream );
+
+    return count_trees_hit_on_slope(tree_info, 1, 1)
+           * count_trees_hit_on_slope(tree_info, 3, 1)
+           * count_trees_hit_on_slope(tree_info, 5, 1)
+           * count_trees_hit_on_slope(tree_info, 7, 1)
+           * count_trees_hit_on_slope(tree_info, 1, 2)
+        ;
 
 }
