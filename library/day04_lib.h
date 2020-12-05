@@ -28,6 +28,7 @@ std::ostream & operator<<(std::ostream &os, const Passport& p);
 Passports parse_data_stream(  std::istream& tree_stream );
 
 std::size_t part1_solve(std::istream& tree_stream);
+std::size_t part2_solve(std::istream& tree_stream);
 
 }
 #endif
