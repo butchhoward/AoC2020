@@ -23,6 +23,8 @@ EOT
 read -r -d '' LIB_CPP <<-EOT
 #include "${MODULE}_lib.h"
 
+using namespace ${MODULE}lib;
+
 int ${MODULE}lib::lib_function()
 {
     return -1;
@@ -61,7 +63,11 @@ read -r -d '' TEST_HEADER <<-EOT
 #ifndef ${MODULEUP}_TEST_H
 #define ${MODULEUP}_TEST_H
 
+namespace ${MODULE}test {
+
 bool ${MODULE}_test();
+
+}
 
 #endif
 EOT
@@ -72,6 +78,7 @@ read -r -d '' TEST_CPP <<-EOT
 #include "test_runner.h"
 
 using namespace ${MODULE}lib;
+using namespace ${MODULE}test;
 
 bool ${MODULE}_test_XXX()
 {

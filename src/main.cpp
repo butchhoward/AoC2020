@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     case 2: day02(datafile); break;
     case 3: day03(datafile); break;
     case 4: day04(datafile); break;
-    case 999: day05(datafile); break;
+    case 5: day05(datafile); break;
     //MAKEMODULE LIST MARKER. DO NOT DELETE
     default:
         std::cerr << "unknown day. did you forget to update the switch in main.cpp?" << std::endl;

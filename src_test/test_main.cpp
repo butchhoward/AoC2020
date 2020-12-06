@@ -14,7 +14,7 @@ int main()
         ,{"day02_test", day02_test}
         ,{"day03_test", day03_test}
         ,{"day04_test", day04_test}
-        ,{"day05_test", day05_test}
+        ,{"day05_test", day05test::day05_test}
         //MAKEMODULE LIST MARKER. DO NOT DELETE
     };
 
