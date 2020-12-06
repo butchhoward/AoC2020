@@ -10,7 +10,15 @@
 
 using namespace day06lib;
 
-typedef std::set<char> GroupAnswers;
+typedef struct GroupAnswers
+{
+    std::vector<std::string> member_answers;
+    void clear()
+    {
+        member_answers.clear();
+    }
+} GroupAnswers;
+
 typedef std::vector<GroupAnswers> Answers;
 
 Answers parse_datastream(std::istream& data_stream )
@@ -28,20 +36,14 @@ Answers parse_datastream(std::istream& data_stream )
         }
         else 
         {
-            for ( auto a : person_answer )
-            {
-                group_answers.insert(a);
-            }
+            group_answers.member_answers.push_back(person_answer);
         }
     }
     if (person_answer.length() != 0)
     {
-        for ( auto a : person_answer )
-        {
-            group_answers.insert(a);
-        }
+        group_answers.member_answers.push_back(person_answer);
     }
-    if (group_answers.size() != 0 )
+    if (group_answers.member_answers.size() != 0 )
     {
         answers.push_back(group_answers);
     }
@@ -56,7 +58,38 @@ std::size_t day06lib::part1_solve(std::istream& data_stream)
     std::size_t sum(0);
     for ( auto a : answers )
     {
-        sum += a.size();
+        std::set<char> anyone_answered;
+        for ( auto m : a.member_answers )
+        {
+            for ( auto c : m)
+            {
+                anyone_answered.insert(c);
+            }
+        }
+        sum += anyone_answered.size();
+    }
+    return sum;
+}
+
+std::size_t day06lib::part2_solve(std::istream& data_stream)
+{
+    auto answers = parse_datastream(data_stream);
+    std::size_t sum(0);
+    for ( auto a : answers )
+    {
+        std::vector<std::string>::iterator m = a.member_answers.begin();
+        std::string everyone_answered(*m);
+        for ( ++m; m != a.member_answers.end(); ++m)
+        {
+            std::ranges::sort(everyone_answered);
+            std::ranges::sort(*m);
+            std::string s;
+            std::set_intersection(everyone_answered.begin(), everyone_answered.end(),
+                                    m->begin(), m->end(),
+                                    std::back_inserter(s));
+            everyone_answered = s;     
+        }
+        sum += everyone_answered.size();
     }
     return sum;
 }

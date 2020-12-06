@@ -35,12 +35,38 @@ bool test_sample_data()
     return 11 == part1_solve(data_stream);
 }
 
+bool test_sample_data_part2()
+{
+    std::istringstream data_stream(sample_data);
+    return 6 == part2_solve(data_stream);;
+}
+
+bool test_data()
+{
+    std::ifstream datafile("./data/day06_data.txt");
+    if(!datafile)
+    {
+        std::cout << "Error opening input file" << std::endl;
+        return false;
+    }
+    auto p1 = part1_solve(datafile);
+
+    std::ifstream datafile2("./data/day06_data.txt");
+    auto p2 = part2_solve(datafile2);
+
+    return     (6703 == p1)
+            && (3430 == p2)
+           ;
+}
+
 }
 
 bool day06test::day06_test()
 {
    test_runner::Tests tests = {
         {"test_sample_data", test_sample_data}
+        ,{"test_sample_data_part2", test_sample_data_part2}
+        ,{"test_data", test_data}
         //,{"XXXNextTest", XXX_test}
     };
 
