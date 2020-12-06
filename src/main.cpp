@@ -8,24 +8,16 @@
 
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <sstream>
 #include <ctime>
 #include <chrono>
 
+#define MAX_DAYS 6
 
-int main(int argc, char *argv[])
+void solve_a_day(int day, std::string datafile)
 {
-    if (argc < 3)
-    {
-        std::cout << "Need a day and a file name" << std::endl;
-        std::exit(1);
-    }
-
-    int day(0);
-    std::istringstream stream(argv[1]);
-    stream >> day;
-    std::string datafile(argv[2]);
 
     auto start = std::chrono::steady_clock::now();
 
@@ -44,6 +36,42 @@ int main(int argc, char *argv[])
     auto end = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     std::cout << "\tTime: " << elapsed.count() << " microseconds" <<  std::endl;
+
+}
+
+int main(int argc, char *argv[])
+{
+    int min_day(1);
+    int max_day(MAX_DAYS);
+
+    if (argc == 2)
+    {
+        std::istringstream stream(argv[1]);
+        stream >> max_day;
+        min_day = max_day;
+
+        if (max_day < 1 || max_day > MAX_DAYS)
+        {
+            std::cout << "Use a day between 1 and " << MAX_DAYS << std::endl;
+            return 1;
+        }
+    }
+  
+    auto start = std::chrono::steady_clock::now();
+
+    for (auto day = min_day; day <= max_day; ++day)
+    {
+        //dayNN_data.txt
+        std::stringstream datafile;
+        datafile << "./data/day" << std::setfill('0') << std::setw(2) << day << "_data.txt";
+
+        solve_a_day(day, datafile.str());
+    }
+
+    auto end = std::chrono::steady_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+    std::cout << "Total Time: " << elapsed.count() << " microseconds" <<  std::endl;
+
 
     return 0;
 }
