@@ -80,20 +80,25 @@ read -r -d '' TEST_CPP <<-EOT
 using namespace ${MODULE}lib;
 using namespace ${MODULE}test;
 
-bool ${MODULE}_test_XXX()
+namepsace {
+
+bool test_XXX()
 {
     return 0 == lib_function();
+}
+
 }
 
 bool ${MODULE}_test()
 {
    test_runner::Tests tests = {
-        {"XXX Test", ${MODULE}_test_XXX}
+        {"XXX Test", test_XXX}
         //,{"XXXNextTest", XXX_test}
     };
 
     return test_runner::run_tests("${MODULE}_test", tests);
 }
+
 EOT
 
 echo "${LIB_HEADER}" > "./library/${MODULE}_lib.h"
@@ -108,7 +113,7 @@ INCLUDE_MARKER="//MAKEMODULE INCLUDE MARKER. DO NOT DELETE"
 LIST_MARKER="//MAKEMODULE LIST MARKER. DO NOT DELETE"
 
 INCLUDE_ITEM="\#include \"${MODULE}_test\.h\""
-LIST_ITEM=",{\"${MODULE}_test\", ${MODULE}_test}"
+LIST_ITEM=",{\"${MODULE}_test\", ${MODULE}test::`${MODULE}_test}"
 
 # the goofiness with the $ and \\\n is to get a newline in the replacement text
 sed -E -i '' -e "s~${INCLUDE_MARKER}~${INCLUDE_ITEM}"$'\\\n'"&~g" ./src_test/test_main.cpp

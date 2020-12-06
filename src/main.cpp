@@ -3,6 +3,7 @@
 #include "day03.h"
 #include "day04.h"
 #include "day05.h"
+#include "day06.h"
 //MAKEMODULE INCLUDE MARKER. DO NOT DELETE
 
 
@@ -34,6 +35,7 @@ int main(int argc, char *argv[])
     case 3: day03(datafile); break;
     case 4: day04(datafile); break;
     case 5: day05(datafile); break;
+    case 6: day06(datafile); break;
     //MAKEMODULE LIST MARKER. DO NOT DELETE
     default:
         std::cerr << "unknown day. did you forget to update the switch in main.cpp?" << std::endl;
