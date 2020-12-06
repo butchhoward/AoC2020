@@ -38,11 +38,11 @@ bool day05_test_data()
     }
     auto p1 = part1_solve(datafile);
 
-    // std::ifstream datafile2("./data/day05_data.txt");
-    // auto p2 = part2_solve(datafile2);
+    std::ifstream datafile2("./data/day05_data.txt");
+    auto p2 = part2_solve(datafile2);
 
-    return (864 == p1)
-        //    && (179 == p2)
+    return     (864 == p1)
+            && (739 == p2)
            ;
 }
 

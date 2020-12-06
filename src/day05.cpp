@@ -18,8 +18,8 @@ int day05(const std::string& filename)
 
     std::cout << "Day 05 Part 1 Solution= " << day05lib::part1_solve(datafile) << std::endl;
 
-    // std::ifstream datafile2(filename);
-    // std::cout << "Day 05 Part 2 Solution= " << day05lib::part2_solve(datafile2) << std::endl;
+    std::ifstream datafile2(filename);
+    std::cout << "Day 05 Part 2 Solution= " << day05lib::part2_solve(datafile2) << std::endl;
 
     return -1;
 }

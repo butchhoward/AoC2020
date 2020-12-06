@@ -7,12 +7,11 @@
 
 namespace day05lib {
 
-
-std::size_t part1_solve(std::istream& data_stream);
-
 typedef std::vector<int> Seats;
 
-Seats parse_data_stream( std::istream& tree_stream );
+std::size_t part1_solve(std::istream& data_stream);
+Seats::value_type part2_solve(std::istream& data_stream);
+
 
 }
 #endif
