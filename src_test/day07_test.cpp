@@ -23,4 +23,3 @@ bool day07test::day07_test()
 
     return test_runner::run_tests("day07_test", tests);
 }
-

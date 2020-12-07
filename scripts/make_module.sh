@@ -54,7 +54,7 @@ using namespace ${MODULE}lib;
 int ${MODULE}(const std::string& filename)
 {
     (void)filename;
-    std::cout << "Put day04 solver here!" << std::endl;
+    std::cout << "Put ${MODULE} solver here!" << std::endl;
     return -1;
 }
 EOT
@@ -80,7 +80,7 @@ read -r -d '' TEST_CPP <<-EOT
 using namespace ${MODULE}lib;
 using namespace ${MODULE}test;
 
-namepsace {
+namespace {
 
 bool test_XXX()
 {
@@ -89,7 +89,7 @@ bool test_XXX()
 
 }
 
-bool ${MODULE}_test()
+bool ${MODULE}test::${MODULE}_test()
 {
    test_runner::Tests tests = {
         {"XXX Test", test_XXX}
@@ -113,7 +113,7 @@ INCLUDE_MARKER="//MAKEMODULE INCLUDE MARKER. DO NOT DELETE"
 LIST_MARKER="//MAKEMODULE LIST MARKER. DO NOT DELETE"
 
 INCLUDE_ITEM="\#include \"${MODULE}_test\.h\""
-LIST_ITEM=",{\"${MODULE}_test\", ${MODULE}test::`${MODULE}_test}"
+LIST_ITEM=",{\"${MODULE}_test\", ${MODULE}test::${MODULE}_test}"
 
 # the goofiness with the $ and \\\n is to get a newline in the replacement text
 sed -E -i '' -e "s~${INCLUDE_MARKER}~${INCLUDE_ITEM}"$'\\\n'"&~g" ./src_test/test_main.cpp
