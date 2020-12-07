@@ -4,6 +4,7 @@
 #include "day04.h"
 #include "day05.h"
 #include "day06.h"
+#include "day07.h"
 //MAKEMODULE INCLUDE MARKER. DO NOT DELETE
 
 
@@ -14,7 +15,7 @@
 #include <ctime>
 #include <chrono>
 
-#define MAX_DAYS 6
+#define MAX_DAYS 7
 
 void solve_a_day(int day, std::string datafile)
 {
@@ -28,9 +29,10 @@ void solve_a_day(int day, std::string datafile)
     case 4: day04(datafile); break;
     case 5: day05(datafile); break;
     case 6: day06(datafile); break;
+    case 999: day07(datafile); break;
     //MAKEMODULE LIST MARKER. DO NOT DELETE
     default:
-        std::cerr << "unknown day. did you forget to update the switch in main.cpp?" << std::endl;
+        std::cerr << "unknown day. did you forget to create the data file '" << datafile << "'?" << std::endl;
     }
 
     auto end = std::chrono::steady_clock::now();
