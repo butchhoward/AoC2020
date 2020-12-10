@@ -7,6 +7,18 @@ using namespace day08test;
 
 namespace {
 
+std::string sample_data = 
+    "nop +0\n"
+    "acc +1\n"
+    "jmp +4\n"
+    "acc +3\n"
+    "jmp -3\n"
+    "acc -99\n"
+    "acc +1\n"
+    "jmp -4\n"
+    "acc +6\n"
+    ;
+
 bool test_XXX()
 {
     return 0 == lib_function();
