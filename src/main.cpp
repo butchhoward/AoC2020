@@ -5,6 +5,7 @@
 #include "day05.h"
 #include "day06.h"
 #include "day07.h"
+#include "day08.h"
 //MAKEMODULE INCLUDE MARKER. DO NOT DELETE
 
 
@@ -48,6 +49,7 @@ void solve_a_day(int day, std::string datafile)
     case 5: day05(datafile); break;
     case 6: day06(datafile); break;
     case 7: day07(datafile); break;
+    case 999: day08(datafile); break;
     //MAKEMODULE LIST MARKER. DO NOT DELETE
     default:
         std::cerr << "unknown day. did you forget fix the case number in main.cpp or to create the data file '" << datafile << "'?" << std::endl;
