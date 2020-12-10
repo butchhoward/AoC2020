@@ -25,12 +25,35 @@ std::string sample_data =
     ;
 
 
+std::string sample_data_other =
+    "shiny gold bags contain 2 dark red bags.\n"
+    "dark red bags contain 2 dark orange bags.\n"
+    "dark orange bags contain 2 dark yellow bags.\n"
+    "dark yellow bags contain 2 dark green bags.\n"
+    "dark green bags contain 2 dark blue bags.\n"
+    "dark blue bags contain 2 dark violet bags.\n"
+    "dark violet bags contain no other bags.\n"
+    ;
 
 bool test_sample_data()
 {
     std::istringstream data_stream(sample_data);
     auto p1 = part1_solve(data_stream);
     return 4 == p1;
+}
+
+bool test_sample_data_part2()
+{
+    std::istringstream data_stream(sample_data);
+    auto p2 = part2_solve(data_stream);
+    return 32 == p2;
+}
+
+bool test_other_sample_data_part2()
+{
+    std::istringstream data_stream(sample_data_other);
+    auto p2 = part2_solve(data_stream);
+    return 126 == p2;
 }
 
 }
@@ -45,11 +68,11 @@ bool test_data()
     }
     auto p1 = part1_solve(datafile);
 
-    // std::ifstream datafile2("./data/day06_data.txt");
-    // auto p2 = part2_solve(datafile2);
+    std::ifstream datafile2("./data/day07_data.txt");
+    auto p2 = part2_solve(datafile2);
 
     return     (148 == p1)
-            // && (3430 == p2)
+            && (24867 == p2)
            ;
 }
 
@@ -57,6 +80,8 @@ bool day07test::day07_test()
 {
    test_runner::Tests tests = {
         {"test_sample_data", test_sample_data}
+        ,{"test_sample_data_part2", test_sample_data_part2}
+        ,{"test_other_sample_data_part2", test_other_sample_data_part2}
         ,{"test_data", test_data}
         //,{"XXXNextTest", XXX_test}
     };

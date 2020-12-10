@@ -45,36 +45,6 @@ typedef struct BagRule
 typedef std::pair<BagColor, BagRule> BagRulesMapPair;
 typedef std::map<BagRulesMapPair::first_type, BagRulesMapPair::second_type> BagRules;
 
-
-std::ostream & operator<<(std::ostream &os, const BagType& b)
-{
-    os << b.count << " '" << b.color << "'";
-    return os;
-}
-
-std::ostream & operator<<(std::ostream &os, const BagRule& r)
-{
-
-    //light orange bags contain 1 dark maroon bag, 3 dim maroon bags, 5 striped green bags, 2 pale aqua bags.
-    os << "'" << r.bag.color << "' bags contain ";
-    for ( auto i : r.inner_bags )
-    {
-        os << i << ",";
-    }
-
-    return os;
-}
-
-std::ostream & operator<<(std::ostream &os, const BagRules& rs)
-{
-    for ( auto r : rs )
-    {
-        os << r.second << std::endl;
-    }
-    return os;
-}
-
-
 static inline void ltrim(std::string &s, const std::string& what) {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), [what](unsigned char ch) {
         return what.find(ch) == std::string::npos;
@@ -180,7 +150,7 @@ BagRules parse_datastream(std::istream& data_stream)
 
 typedef std::set<BagColor> BagColorSet;
 
-BagColorSet count_bags_can_hold_recursive( const BagColorSet& init, const BagRules& bagrules, const BagColor& color )
+BagColorSet find_all_bags_can_hold_color( const BagRules& bagrules, const BagColor& color, const BagColorSet& init={})
 {
     BagColorSet c = std::accumulate<BagRules::const_iterator, BagColorSet>(bagrules.begin(), bagrules.end(), init, 
                     [bagrules, color](BagColorSet init, const BagRulesMapPair& r)
@@ -204,16 +174,44 @@ BagColorSet count_bags_can_hold_recursive( const BagColorSet& init, const BagRul
 
                         ;
                         init.insert(r.first);                                    
-                        return count_bags_can_hold_recursive( init, bagrules, r.first );
+                        return find_all_bags_can_hold_color( bagrules, r.first, init );
                     }
                 );
     return c;
 }
 
+std::size_t count_bags_inside( const BagRules& bagrules, const BagColor& color)
+{
+    if ( color.empty() )
+    {
+        return 0;
+    }
+
+    auto bagrule_it = std::find_if(bagrules.begin(), bagrules.end(), [color](auto b){return b.second.bag.color == color;});
+    if ( bagrule_it == bagrules.end() || bagrule_it->second.inner_bags.size() == 0)
+    {
+        return 0;
+    }
+
+    auto inner_bags = bagrule_it->second.inner_bags;
+
+    return std::accumulate(inner_bags.begin(), inner_bags.end(), 0, 
+                                    [bagrules](size_t init, auto bag)
+                                    {
+                                        return init + bag.count + (bag.count * count_bags_inside(bagrules, bag.color));
+                                    } 
+                                );
+}
+
 std::size_t day07lib::part1_solve(std::istream& data_stream)
 {
     auto bag_rules = parse_datastream(data_stream);
-    BagColor color("shiny gold");
-    auto colors = count_bags_can_hold_recursive({}, bag_rules, color);
+    auto colors = find_all_bags_can_hold_color(bag_rules, BagColor("shiny gold"));
     return colors.size();
+}
+
+std::size_t day07lib::part2_solve(std::istream& data_stream)
+{
+    auto bag_rules = parse_datastream(data_stream);
+    return count_bags_inside(bag_rules, BagColor("shiny gold"));
 }
