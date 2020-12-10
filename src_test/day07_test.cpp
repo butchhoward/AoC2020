@@ -3,6 +3,7 @@
 #include "test_runner.h"
 #include <string>
 #include <sstream>
+#include <fstream>
 
 using namespace day07lib;
 using namespace day07test;
@@ -29,16 +30,34 @@ bool test_sample_data()
 {
     std::istringstream data_stream(sample_data);
     auto p1 = part1_solve(data_stream);
-    std::cout << "Part1=" << p1 << std::endl;
     return 4 == p1;
 }
 
+}
+
+bool test_data()
+{
+    std::ifstream datafile("./data/day07_data.txt");
+    if(!datafile)
+    {
+        std::cout << "Error opening input file" << std::endl;
+        return false;
+    }
+    auto p1 = part1_solve(datafile);
+
+    // std::ifstream datafile2("./data/day06_data.txt");
+    // auto p2 = part2_solve(datafile2);
+
+    return     (148 == p1)
+            // && (3430 == p2)
+           ;
 }
 
 bool day07test::day07_test()
 {
    test_runner::Tests tests = {
         {"test_sample_data", test_sample_data}
+        ,{"test_data", test_data}
         //,{"XXXNextTest", XXX_test}
     };
 

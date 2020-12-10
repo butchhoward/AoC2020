@@ -173,7 +173,6 @@ BagRules parse_datastream(std::istream& data_stream)
         bagrules.insert({bagrule.bag.color, bagrule});
     }
 
-    std::cout << "\n\nAll Bagrules:\n" << bagrules << std::endl;
     return bagrules;
 }
 
