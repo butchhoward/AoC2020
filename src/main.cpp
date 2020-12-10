@@ -15,6 +15,24 @@
 #include <ctime>
 #include <chrono>
 
+namespace {
+
+std::string format_duration(std::chrono::microseconds timeInMicroSec)
+{
+    auto c(timeInMicroSec.count());
+    std::ostringstream oss;
+    oss << std::setfill('0') 
+        << (c % 1000000000) / 1000000
+        << ":"
+        << std::setw(3)
+        << (c % 1000000) / 1000
+        << ":"
+        << std::setw(3)
+        << c % 1000;
+    return oss.str();
+}
+
+
 #define MAX_DAYS 7
 
 void solve_a_day(int day, std::string datafile)
@@ -37,7 +55,9 @@ void solve_a_day(int day, std::string datafile)
 
     auto end = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-    std::cout << "\tTime: " << elapsed.count() << " microseconds" <<  std::endl;
+    std::cout << "\tTime: " << format_duration(elapsed) << " " <<  std::endl;
+
+}
 
 }
 
@@ -72,7 +92,7 @@ int main(int argc, char *argv[])
 
     auto end = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-    std::cout << "Total Time: " << elapsed.count() << " microseconds" <<  std::endl;
+    std::cout << "Total Time: " << format_duration(elapsed) << " " <<  std::endl;
 
 
     return 0;

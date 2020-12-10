@@ -1,7 +1,30 @@
 #include "test_runner.h"
 #include <ctime>
 #include <chrono>
+#include <sstream>
+#include <iomanip>
+
+
 using namespace test_runner;
+
+namespace {
+
+std::string format_duration(std::chrono::microseconds timeInMicroSec)
+{
+    auto c(timeInMicroSec.count());
+    std::ostringstream oss;
+    oss << std::setfill('0') 
+        << (c % 1000000000) / 1000000
+        << ":"
+        << std::setw(3)
+        << (c % 1000000) / 1000
+        << ":"
+        << std::setw(3)
+        << c % 1000;
+    return oss.str();
+}
+
+}
 
 bool test_runner::run_tests( const test_runner::Tests& tests )
 {
@@ -34,11 +57,11 @@ bool test_runner::run_tests( const std::string& prefix, const test_runner::Tests
         {
             if ( test_result )
             {
-                std::cout << "\tPASSED: "<< t.description << " ( " << elapsed.count() << " us )" <<  std::endl;
+                std::cout << "\tPASSED: "<< t.description << " ( " << format_duration(elapsed) << " )" <<  std::endl;
             }
             else 
             {
-                std::cerr << "\tFAILED: "<< t.description << " ( " << elapsed.count() << " us )" << std::endl;
+                std::cerr << "\tFAILED: "<< t.description << " ( " << format_duration(elapsed) << " )" << std::endl;
             }
         }
     }
@@ -48,7 +71,7 @@ bool test_runner::run_tests( const std::string& prefix, const test_runner::Tests
 
     if (output_style != OutputStyle::NONE)
     {
-        std::cout << "FINISHED: " << prefix << " Tests: " << tests.size() << " Failing: " << failed_tests <<  " ( " << suite_elapsed.count() << " us )" << std::endl;
+        std::cout << "FINISHED: " << prefix << " Tests: " << tests.size() << " Failing: " << failed_tests <<  " ( " << format_duration(suite_elapsed) << " )" << std::endl;
     }
 
     return failed_tests == 0;
