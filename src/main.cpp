@@ -15,26 +15,12 @@
 #include <sstream>
 #include <ctime>
 #include <chrono>
+#include <chrono_helpers.h>
 
 namespace {
 
-std::string format_duration(std::chrono::microseconds timeInMicroSec)
-{
-    auto c(timeInMicroSec.count());
-    std::ostringstream oss;
-    oss << std::setfill('0') 
-        << (c % 1000000000) / 1000000
-        << ":"
-        << std::setw(3)
-        << (c % 1000000) / 1000
-        << ":"
-        << std::setw(3)
-        << c % 1000;
-    return oss.str();
-}
 
-
-#define MAX_DAYS 7
+#define MAX_DAYS 8
 
 void solve_a_day(int day, std::string datafile)
 {
@@ -49,7 +35,7 @@ void solve_a_day(int day, std::string datafile)
     case 5: day05(datafile); break;
     case 6: day06(datafile); break;
     case 7: day07(datafile); break;
-    case 999: day08(datafile); break;
+    case 8: day08(datafile); break;
     //MAKEMODULE LIST MARKER. DO NOT DELETE
     default:
         std::cerr << "unknown day. did you forget fix the case number in main.cpp or to create the data file '" << datafile << "'?" << std::endl;
@@ -57,7 +43,7 @@ void solve_a_day(int day, std::string datafile)
 
     auto end = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-    std::cout << "\tTime: " << format_duration(elapsed) << " " <<  std::endl;
+    std::cout << "\tTime: " << chrono_helper::format_duration(elapsed) << " " <<  std::endl;
 
 }
 
@@ -94,7 +80,7 @@ int main(int argc, char *argv[])
 
     auto end = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-    std::cout << "Total Time: " << format_duration(elapsed) << " " <<  std::endl;
+    std::cout << "Total Time: " << chrono_helper::format_duration(elapsed) << " " <<  std::endl;
 
 
     return 0;
