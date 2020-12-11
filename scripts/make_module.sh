@@ -1,11 +1,23 @@
 #!/usr/bin/env bash
 
 # assume running from cpp folder
-# ./scripts/make_module day05
+# ./scripts/make_module <module_name> [DD]
+# module_name = the base name for the files, classes, namespaces, etc.
+# DD == optional day number. If present it is used where useful. If not present 999 is used in those places.
 # creates library, src_test, src files for day05 with skeleton files
 
+MODULE="new_module"
+DAY_NUMBER=999
 
-MODULE=$1
+if [ "$#" -gt 0 ]; then
+    MODULE="$1"
+fi
+
+if [ "$#" -gt 1 ]; then
+    DAY_NUMBER="$2"
+fi
+
+
 MODULEUP=${MODULE^^}
 
 read -r -d '' LIB_HEADER <<-EOT
@@ -119,10 +131,10 @@ LIST_ITEM=",{\"${MODULE}_test\", ${MODULE}test::${MODULE}_test}"
 sed -E -i '' -e "s~${INCLUDE_MARKER}~${INCLUDE_ITEM}"$'\\\n'"&~g" ./src_test/test_main.cpp
 sed -E -i '' -e "s~${LIST_MARKER}~${LIST_ITEM}"$'\\\n'"        &~g"  ./src_test/test_main.cpp
 
-# case 999: day02(datafile); break;
-CASE_ITEM="case 999: ${MODULE}(datafile); break;"
+# ,{999, day02};
+DAY_MAP_ITEM=",{${DAY_NUMBER}, ${MODULE}}"
 MAIN_INCLUDE_ITEM="\#include \"${MODULE}\.h\""
 
 
 sed -E -i '' -e "s~${INCLUDE_MARKER}~${MAIN_INCLUDE_ITEM}"$'\\\n'"&~g" ./src/main.cpp
-sed -E -i '' -e "s~${LIST_MARKER}~${CASE_ITEM}"$'\\\n'"    &~g"  ./src/main.cpp
+sed -E -i '' -e "s~${LIST_MARKER}~${DAY_MAP_ITEM}"$'\\\n'"    &~g"  ./src/main.cpp
