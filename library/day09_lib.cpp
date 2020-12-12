@@ -2,6 +2,9 @@
 #include <vector>
 #include <iterator>
 #include <sstream>
+#include <utility>
+#include <algorithm>
+#include <numeric>
 
 using namespace day09lib;
 
@@ -59,6 +62,27 @@ XMASData::iterator find_first_invalid(int preamble_size, XMASData& data)
     return data.end();
 }
 
+typedef std::pair<XMASData::iterator, XMASData::iterator> XMASIteratorPair;
+XMASIteratorPair find_sequence_sums_to(int invalid_value, XMASData& data)
+{
+    for (XMASData::size_type window_size = 2; window_size <= data.size(); ++window_size)
+    {
+        auto window_begin = data.begin();
+        auto window_end = std::next(window_begin, window_size);
+        std::size_t window_end_index(window_size);
+        for ( ;window_end_index < data.size() ; ++window_end_index, ++window_begin, ++window_end )
+        {
+            auto sum = std::accumulate(window_begin, window_end, 0);
+            if (sum == invalid_value)
+            {
+                return std::make_pair(window_begin, window_end);
+            }
+        }
+    }
+    
+    return std::make_pair(data.end(), data.end());
+}
+
 XMASData parse_datastream(std::istream& data_stream)
 {
     XMASData data;
@@ -87,4 +111,19 @@ std::size_t day09lib::part1_solve(int preamble_size, std::istream& data_stream)
     }
 
     return *invalid;
+}
+
+std::size_t day09lib::part2_solve(int invalid_value, std::istream& data_stream)
+{
+    auto data = parse_datastream(data_stream);
+    auto seq_info = find_sequence_sums_to(invalid_value, data);
+    if (seq_info.first == data.end())
+    {
+        std::cout << "!!!part2_solve: FAILED!!" << std::endl;
+        return 0;
+    }
+
+    auto v_min = std::ranges::min_element(seq_info.first, seq_info.second);
+    auto v_max = std::ranges::max_element(seq_info.first, seq_info.second);
+    return *v_max + *v_min;
 }

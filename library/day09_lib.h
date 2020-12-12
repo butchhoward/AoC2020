@@ -7,6 +7,7 @@
 namespace day09lib {
 
 std::size_t part1_solve(int preamble_size, std::istream& data_stream);
+std::size_t part2_solve(int invalid_value, std::istream& data_stream);
 
 }
 

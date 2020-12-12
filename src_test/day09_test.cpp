@@ -54,6 +54,13 @@ bool test_sample_data_part1()
     return 127 == p1;
 }
 
+bool test_sample_data_part2()
+{
+    std::istringstream data_stream(sample_data);
+    auto p1 = part2_solve(127, data_stream);
+    return 62 == p1;
+}
+
 
 bool test_data()
 {
@@ -65,11 +72,11 @@ bool test_data()
     }
     auto p1 = part1_solve(25, datafile);
 
-    // std::ifstream datafile2("./data/day08_data.txt");
-    // auto p2 = part2_solve(datafile2);
+    std::ifstream datafile2("./data/day09_data.txt");
+    auto p2 = part2_solve(p1, datafile2);
 
     return     (15690279 == p1)
-            // && (662 == p2)
+            && (2174232 == p2)
            ;
 }
 
@@ -81,6 +88,7 @@ bool day09test::day09_test()
    test_runner::Tests tests = {
         {"test_1_25_part1", test_1_25_part1}
         ,{"test_sample_data_part1", test_sample_data_part1}
+        ,{"test_sample_data_part2", test_sample_data_part2}
         ,{"test_data", test_data}
     };
 
