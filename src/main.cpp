@@ -7,6 +7,7 @@
 #include "day07.h"
 #include "day08.h"
 #include "day09.h"
+#include "day10.h"
 //MAKEMODULE INCLUDE MARKER. DO NOT DELETE
 
 
@@ -62,7 +63,8 @@ int main(int argc, char *argv[])
         ,{7, day07}
         ,{8, day08}
         ,{9, day09}
-        //MAKEMODULE LIST MARKER. DO NOT DELETE
+        ,{10, day10}
+    //MAKEMODULE LIST MARKER. DO NOT DELETE
     };
 
     auto start = std::chrono::steady_clock::now();

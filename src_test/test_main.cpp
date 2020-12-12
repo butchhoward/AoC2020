@@ -9,6 +9,7 @@
 #include "day07_test.h"
 #include "day08_test.h"
 #include "day09_test.h"
+#include "day10_test.h"
 //MAKEMODULE INCLUDE MARKER. DO NOT DELETE
 
 int main()
@@ -23,6 +24,7 @@ int main()
         ,{"day07_test", day07test::day07_test}
         ,{"day08_test", day08test::day08_test}
         ,{"day09_test", day09test::day09_test}
+        ,{"day10_test", day10test::day10_test}
         //MAKEMODULE LIST MARKER. DO NOT DELETE
     };
 
