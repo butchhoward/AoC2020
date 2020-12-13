@@ -44,87 +44,15 @@ Chargers parse_datastream(std::istream& data_stream)
     return data;
 }
 
-
-Chargers get_next_chargers(const Chargers& chargers, Jolt current)
+Chargers get_next_chargers( const Chargers& chargers, Jolt current)
 {
     Chargers next_chargers;
     std::ranges::copy_if(chargers, std::back_inserter(next_chargers), [current](auto c){ return c == current+1 || c == current+2 || c==current+3;});
     return next_chargers;
 };
 
-// void build_sub_chain_the_super_low_way_with_recursion(const Chargers& chargers, Jolt max_charger, Jolt current, Chargers& chain)
-// {
 
-//     auto get_next_chargers = [chargers](Jolt current)->Chargers
-//                             {
-//                                 Chargers next_chargers;
-//                                 std::ranges::copy_if(chargers, std::back_inserter(next_chargers), [current](auto c){ return c == current+1 || c == current+2 || c==current+3;});
-//                                 return next_chargers;
-//                             };
-
-
-//     // std::cout << "build_sub_chain: " << current << std::endl;
-    
-//     auto next_chargers = get_next_chargers(current);
-//     // std::cout << "next_chargers: " << next_chargers << std::endl;
-
-//     Chargers longest_sub;
-//     for (auto c : next_chargers )
-//     {
-//         Chargers sub;
-//         if ( c == max_charger)
-//         {   
-//             // std::cout << "maxxed" << std::endl;
-//             sub.push_back(max_charger);
-//         }
-//         else
-//         {
-//             build_sub_chain(chargers, max_charger, c, sub);
-//         }
-        
-//         if (sub.size() > longest_sub.size())
-//         {
-//             // std::cout << "longer subchain: " << sub.size() << " > " << longest_sub.size() << std::endl;
-//             longest_sub.clear();
-//             std::ranges::copy(sub, std::back_inserter(longest_sub));
-//         }
-//     }
-//     chain.push_back(current);
-//     if (longest_sub.size() > 0)
-//     {
-//         std::ranges::copy(longest_sub, std::back_inserter(chain));
-//     }
-//     // std::cout << " chain returned: " << chain << std::endl;
-// }
-//
-//
-// Chargers build_chain_the_super_low_way(const Chargers& chargers)
-// {
-//     std::cout << "build_chain: chargers.size=" << chargers.size() <<  std::endl;
-
-//     Chargers chain;
-//     if (chargers.size() == 0)
-//     {
-//         return chain;
-//     }
-
-//     auto max_charger = *std::max_element(chargers.begin(), chargers.end());
-//     std::cout << "max_charger=" << max_charger <<  std::endl;
-//     auto device = max_charger + 3;
-
-
-//     std::cout << "build_chain: begin" <<  std::endl;
-
-//     build_sub_chain(chargers, max_charger, 0, chain);
-//     chain.push_back(device);
-
-//     return chain;
-// }
-
-
-
-//the super fast way
-Chargers build_chain(const Chargers& chargers)
+Chargers build_chain(Chargers& chargers)
 {
     Chargers chain;
     if (chargers.size() == 0)
@@ -146,7 +74,6 @@ Chargers build_chain(const Chargers& chargers)
 
     return chain;
 }
-
 
 typedef std::pair<std::size_t, std::size_t> Diff13Counts;
 Diff13Counts count_diffs(const Chargers& chargers)
@@ -173,6 +100,101 @@ Diff13Counts count_diffs(const Chargers& chargers)
     return std::make_pair(diff1,diff3);
 }
 
+
+typedef std::map<Jolt, Chargers> MemoBranches;
+
+MemoBranches build_branch_memo( Chargers& chargers)
+{
+    MemoBranches memo;
+    if (chargers.size() == 0)
+    {
+        return memo;
+    }
+
+    auto next_chargers_wall = get_next_chargers(chargers, 0);
+    memo.insert({0, next_chargers_wall});
+
+    for ( auto c : chargers )
+    {
+        auto next_chargers = get_next_chargers(chargers, c);
+        memo.insert({c, next_chargers});
+    };
+
+    auto max_charger = *std::max_element(chargers.begin(), chargers.end());
+    Chargers device = {max_charger + 3};
+    memo.insert_or_assign(max_charger, device);
+
+
+    return memo;
+}
+
+
+std::size_t count_them( const MemoBranches& memos, std::map<Jolt, std::size_t>& subnode_totals, Jolt c)
+{
+    std::size_t total(0);
+
+
+    auto b = memos.find(c);
+    if ( b != memos.end())
+    {
+        auto b_chargers = b->second.size();
+        if ( b_chargers > 1 )
+        {
+            total += b_chargers-1;
+        }
+
+        for ( auto sub_b : b->second )
+        {
+            auto snt = subnode_totals.find(sub_b);
+            if (snt != subnode_totals.end())
+            {
+                total += snt->second;
+            }
+            else
+            {
+                auto sub_n_count = count_them(memos, subnode_totals, sub_b);
+                subnode_totals.insert_or_assign(sub_b, sub_n_count);
+                total += sub_n_count;
+            } 
+        }
+    }
+
+    return total;
+};
+
+
+std::size_t count_possible_chains( Chargers chargers )
+{
+
+/*
+    I tried several other thjings that either did not calculate the values needed ot ran for too long (>>2hours) without getting a result.
+
+    A hint about using memoization from our slack finally got me in a good direction. Thanks PaulS, LuisC, TylerV, AndrewA, MaisamS, et.al.
+
+    recurse down the connections recording the branch-counts at each node then count the leaf nodes
+    so for the sample data
+        1,1
+        4,3
+        5,2
+        6,1 
+        7,1 
+        10,2
+        11,1
+        12,1
+        15,1
+        16,1
+        19,1
+    As we recurse, check the memoization to see if we have aleady crawled a node.
+
+    maybe crawl the optimal path (see part1), recording the nodes and counts, then recurse just that tabulation for the branches? (<<-- this!)
+    
+*/
+    
+    auto memos = build_branch_memo(chargers);
+    std::map<Jolt, std::size_t> subnode_totals;
+    return 1+count_them(memos, subnode_totals, 0);
+}
+
 }
 
 std::size_t day10lib::part1_solve(std::istream& data_stream)
@@ -186,5 +208,9 @@ std::size_t day10lib::part1_solve(std::istream& data_stream)
 std::size_t day10lib::part2_solve(std::istream& data_stream)
 {
     auto chargers = parse_datastream(data_stream);
-    return 0;
+    if (chargers.size() == 0)
+    {
+        return 0;
+    }
+    return count_possible_chains(chargers);
 }

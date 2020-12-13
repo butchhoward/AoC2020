@@ -58,6 +58,7 @@ std::string other_sample_data =
     "3\n"
     ;
 
+
 bool test_sample_data()
 {
     std::istringstream data_stream(sample_data);
@@ -70,6 +71,20 @@ bool test_other_sample_data()
     std::istringstream data_stream(other_sample_data);
     auto p = part1_solve(data_stream);
     return 22*10 == p;
+}
+
+bool test_sample_data_part2()
+{
+    std::istringstream data_stream(sample_data);
+    auto p = part2_solve(data_stream);
+    return 8 == p;
+}
+
+bool test_other_sample_data_part2()
+{
+    std::istringstream data_stream(other_sample_data);
+    auto p = part2_solve(data_stream);
+    return 19208 == p;
 }
 
 
@@ -85,11 +100,11 @@ bool test_data()
     }
     auto p1 = part1_solve(datafile);
 
-    // std::ifstream datafile2(data_file_name);
-    // auto p2 = part2_solve(datafile2);
+    std::ifstream datafile2(data_file_name);
+    auto p2 = part2_solve(datafile2);
 
     return     (65*32 == p1)
-            // && (2174232 == p2)
+            && (6908379398144 == p2)
            ;
 }
 
@@ -102,6 +117,8 @@ bool day10test::day10_test()
    test_runner::Tests tests = {
         {"test_sample_data", test_sample_data}
         ,{"test_other_sample_data", test_other_sample_data}
+        ,{"test_sample_data_part2", test_sample_data_part2}
+        ,{"test_other_sample_data_part2", test_other_sample_data_part2}
         ,{"test_data", test_data}
     };
 
