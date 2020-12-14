@@ -23,10 +23,13 @@ MODULEUP=${MODULE^^}
 read -r -d '' LIB_HEADER <<-EOT
 #ifndef ${MODULEUP}_LIB_H
 #define ${MODULEUP}_LIB_H
+#include <iostream>
+#include <cstddef>
 
 namespace ${MODULE}lib {
 
-int lib_function();
+std::size_t part1_solve(std::istream& data_stream);
+std::size_t part2_solve(std::istream& data_stream);
 
 }
 #endif
@@ -35,12 +38,52 @@ EOT
 read -r -d '' LIB_CPP <<-EOT
 #include "${MODULE}_lib.h"
 
+#include <iostream>
+#include <sstream>
+#include <cstddef>
+#include <vector>
+#include <ranges>
+#include <map>
+#include <set>
+#include <algorithm>
+#include <numeric>
+#include <functional>
+
 using namespace ${MODULE}lib;
 
-int ${MODULE}lib::lib_function()
+namespace {
+
+typedef int Thing;
+typedef std::vector<Thing> Things;
+
+Things parse_datastream(std::istream& data_stream)
 {
-    return -1;
+    Things data;
+
+    std::string line;
+    for (;std::getline(data_stream, line);)
+    {   
+        std::istringstream v(line);
+    }
+    
+    return data;
 }
+
+}
+
+std::size_t ${MODULE}lib::part1_solve(std::istream& data_stream)
+{
+    auto things = parse_datastream(data_stream);
+    return 0;
+}
+
+std::size_t ${MODULE}lib::part1_solve(std::istream& data_stream)
+{
+    auto things = parse_datastream(data_stream);
+    return 0;
+}
+
+
 EOT
 
 read -r -d '' SRC_HEADER <<-EOT
@@ -60,13 +103,23 @@ read -r -d '' SRC_CPP <<-EOT
 #include "${MODULE}.h"
 #include "${MODULE}_lib.h"
 #include <iostream>
+#include <fstream>
 
 using namespace ${MODULE}lib;
 
 int ${MODULE}(const std::string& filename)
 {
-    (void)filename;
-    std::cout << "Put ${MODULE} solver here!" << std::endl;
+    std::ifstream datafile(filename);
+    if(!datafile)
+    {
+        std::cout << "Error opening input file" << std::endl;
+        return -1;
+    }
+    std::cout << "Day ${DAY_NUMBER} Part 1 Solution= " << day10lib::part1_solve(datafile) << std::endl;
+
+    std::ifstream datafile2(filename);
+    std::cout << "Day ${DAY_NUMBER} Part 2 Solution= " << day10lib::part2_solve(datafile2) << std::endl;
+
     return -1;
 }
 EOT
@@ -88,24 +141,56 @@ read -r -d '' TEST_CPP <<-EOT
 #include "${MODULE}_test.h"
 #include "${MODULE}_lib.h"
 #include "test_runner.h"
+#include <sstream>
+#include <fstream>
+#include <string>
 
 using namespace ${MODULE}lib;
 using namespace ${MODULE}test;
 
 namespace {
 
-bool test_XXX()
+std::string sample_data = 
+    "xx\n"
+    "xx\n"
+    ;
+
+
+bool test_sample_data()
 {
-    return 0 == lib_function();
+    std::istringstream data_stream(sample_data);
+    auto p = part1_solve(data_stream);
+    return 999999999 == p;
 }
+
+bool test_data()
+{
+    std::string data_file_name = "./data/day${DAY_NUMBER}_data.txt";
+
+    std::ifstream datafile(data_file_name);
+    if(!datafile)
+    {
+        std::cout << "Error opening input file" << std::endl;
+        return false;
+    }
+    auto p1 = part1_solve(datafile);
+
+    std::ifstream datafile2(data_file_name);
+    auto p2 = part2_solve(datafile2);
+
+    return     (999999999 == p1)
+            && (999999999 == p2)
+           ;
+}
+
 
 }
 
 bool ${MODULE}test::${MODULE}_test()
 {
    test_runner::Tests tests = {
-        {"XXX Test", test_XXX}
-        //,{"XXXNextTest", XXX_test}
+        {"test_sample_data", test_sample_data}
+        // ,{"test_data", test_data}
     };
 
     return test_runner::run_tests("${MODULE}_test", tests);
