@@ -163,6 +163,13 @@ bool test_sample_data()
     return 999999999 == p;
 }
 
+bool test_sample_data_part2()
+{
+    std::istringstream data_stream(sample_data);
+    auto p = part2_solve(data_stream);
+    return 999999999 == p;
+}
+
 bool test_data()
 {
     std::string data_file_name = "./data/day${DAY_NUMBER}_data.txt";
@@ -190,6 +197,7 @@ bool ${MODULE}test::${MODULE}_test()
 {
    test_runner::Tests tests = {
         {"test_sample_data", test_sample_data}
+        {"test_sample_data_part2", test_sample_data_part2}
         // ,{"test_data", test_data}
     };
 

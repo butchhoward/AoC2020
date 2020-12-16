@@ -17,15 +17,15 @@ int main()
 {
     test_runner::Tests tests = {
         {"day01_test", day01_test}
-        ,{"day02_test", day02_test}
-        ,{"day03_test", day03_test}
-        ,{"day04_test", day04_test}
-        ,{"day05_test", day05test::day05_test}
-        ,{"day06_test", day06test::day06_test}
-        ,{"day07_test", day07test::day07_test}
-        ,{"day08_test", day08test::day08_test}
-        ,{"day09_test", day09test::day09_test}
-        ,{"day10_test", day10test::day10_test}
+        // ,{"day02_test", day02_test}
+        // ,{"day03_test", day03_test}
+        // ,{"day04_test", day04_test}
+        // ,{"day05_test", day05test::day05_test}
+        // ,{"day06_test", day06test::day06_test}
+        // ,{"day07_test", day07test::day07_test}
+        // ,{"day08_test", day08test::day08_test}
+        // ,{"day09_test", day09test::day09_test}
+        // ,{"day10_test", day10test::day10_test}
         ,{"day11_test", day11test::day11_test}
         //MAKEMODULE LIST MARKER. DO NOT DELETE
     };
